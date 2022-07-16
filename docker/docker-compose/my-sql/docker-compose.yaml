@@ -1,0 +1,32 @@
+# Use root/example as user/password credentials
+version: '3'
+
+services:
+
+  db:
+    container_name: my-sql
+    image: mysql:5.7.16
+    command: --innodb-use-native-aio=0 #--default-authentication-plugin=mysql_native_password
+    restart: always
+    tty: true
+    volumes:
+      - ./data:/var/lib/mysql
+
+    environment:
+      - MYSQL_DATABASE=nodedb
+      - MYSQL_USER=usr
+      - MYSQL_ROOT_PASSWORD=example
+    networks:
+      - node-network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - node-network
+
+networks:
+  node-network:
+    driver: bridge
