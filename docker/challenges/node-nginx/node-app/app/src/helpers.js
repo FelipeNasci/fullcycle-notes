@@ -32,7 +32,7 @@ export const responseTemplate = (results = []) => `
       </style>
     </head>
     <body>
-      <h1> Records </h1>
+      <h1>Full Cycle Rocks!</h1>
       <table>
         <tr>
           <th>Name</th>
