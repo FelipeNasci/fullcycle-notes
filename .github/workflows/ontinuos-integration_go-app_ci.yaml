@@ -3,12 +3,17 @@ on: [push]
 
 jobs:
   check-golang-app:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: ["1.15", "1.14"]
+        so: ["ubuntu-20.04", "ubuntu-latest"]
+
+    runs-on: ${{ matrix.so }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v4
         with:
-          go-version: 1.15
+          go-version: ${{ matrix.go }}
       - name: show version
         run: go version
       - name: run tests
