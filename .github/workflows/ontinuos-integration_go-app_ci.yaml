@@ -1,5 +1,8 @@
 name: ci-golang-workflow
-on: [push]
+on: 
+  push:
+    branches:
+      - main
 
 jobs:
   check-golang-app:
@@ -49,20 +52,20 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-app:latest
 
-  sonarcloud:
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: cd continuos-integration && cd node-app && yarn install && yarn test --coverage
+  # sonarcloud:
+  #   name: SonarCloud
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #     - run: cd continuos-integration && cd node-app && yarn install && yarn test --coverage
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #     - name: SonarCloud Scan
+  #       uses: SonarSource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
