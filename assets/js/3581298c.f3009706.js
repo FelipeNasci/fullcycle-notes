@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkfullcycle_notes=self.webpackChunkfullcycle_notes||[]).push([[7994],{9963:e=>{e.exports=JSON.parse('{"metadata":{"permalink":"/fullcycle-notes/fullcycle-notes/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
