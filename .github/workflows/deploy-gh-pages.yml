@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install dependencies
+        run: |
+          pwd
+          ls -a
+          cd fullcycle-notes
+          yarn install
+
+      - name: Build app
+        run: |
+          pwd
+          ls -a
+          cd fullcycle-notes
+          yarn build
+
+      - name: Deploy App
+        run: |
+          pwd
+          ls -a
+          cd fullcycle-notes
+          GIT_USER=${{ secrets.GH_TOKEN }} GIT_USER_NAME=felipenasci GIT_USER_EMAIL=dfnascimento@live.com yarn deploy
