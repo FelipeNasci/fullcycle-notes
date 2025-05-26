@@ -8,27 +8,30 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: fullcycle-notes
 
     steps:
       - uses: actions/checkout@v4
-      
+
+      - name: Cache Yarn dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.yarn/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
       - name: Install dependencies
-        run: |
-          pwd
-          ls -a
-          cd fullcycle-notes
-          yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Build app
-        run: |
-          pwd
-          ls -a
-          cd fullcycle-notes
-          yarn build
+        run: yarn build
 
       - name: Deploy App
-        run: |
-          pwd
-          ls -a
-          cd fullcycle-notes
-          GIT_USER=${{ secrets.GH_TOKEN }} GIT_USER_NAME=felipenasci GIT_USER_EMAIL=dfnascimento@live.com yarn deploy
+        env:
+          GIT_USER: ${{ secrets.GH_TOKEN }}
+          GIT_USER_NAME: felipenasci
+          GIT_USER_EMAIL: dfnascimento@live.com
+        run: yarn deploy
