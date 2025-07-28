@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Generate Docs
+        run: yarn gen:docs
+
       - name: Build app
         run: yarn build
 
